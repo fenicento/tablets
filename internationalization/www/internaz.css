@@ -1,0 +1,272 @@
+@font-face
+{
+font-family: din-light;
+src: url('fonts/DIN Light.ttf');
+}
+
+body {
+	display:block;
+	width:100%;
+	background-color:black;
+	font-family: din-light;
+	color:white;
+	font-size:22px;
+	height:800px;
+	overflow:hidden;
+	-webkit-user-select: none;
+	margin:0 !important;
+}
+
+
+#side{
+	width:20%;
+	background-color:white;
+	float:left;
+	height:800px;
+	position:relative;
+	z-index:3;
+}
+#top-side{
+	width:100%;
+	height:150px;
+	margin-bottom:50px;
+}
+#list{
+	color:black;
+	height:560px;
+	overflow:auto;
+}
+.countries{
+	padding:0;
+	list-style: none;
+}
+.continents{
+	display:block;
+	text-indent:0;
+	padding:0;
+	list-style: none;
+	margin-left:40px;
+}
+.continent{
+	font-size:20px;
+	line-height:40px;
+	text-transform: uppercase;
+	-webkit-user-select: none;
+	-webkit-transform: translate3d(0px,0px,0px);
+}
+.circ{
+	float:right;
+	margin-top:6px;
+	margin-right:30px;
+	width:20px;
+	height:20px;
+	background:black;
+	border-radius: 100%;
+}
+.country{
+	height:40px;
+	font-size:20px;
+	line-height:40px;
+	list-style: none;
+	text-transform: capitalize;
+	text-indent: none;
+	-webkit-transform: translate3d(0px,0px,0px);
+
+}
+#main{
+	width:80%;
+	height:100%;
+	float:left;
+}
+#top{
+	width:100%;
+	height:60px;
+	margin-top:20px;
+}
+#info{
+	float:right;
+	height:40px;
+	line-height: 40px;
+	border:2px solid white;
+	border-radius:100%;
+	margin-top:20px;
+	width:40px;
+	text-align: center;
+}
+
+#lang{
+	float:right;
+	margin-right:40px;
+}
+#lang .sel {
+	background-color: white;
+	border-radius: 100%;
+	color:black;
+}
+em{
+	display:block;
+	float:left;
+	text-align: center;
+	font-style: normal;
+	line-height:40px;
+	height:40px;
+	width:40px;
+}
+
+#side img{
+	display:block;
+	margin:0 auto;
+	margin-top:40px;
+}
+
+#filters{
+	width:100%;
+	height:50px;
+}
+#in {
+	margin-left:30%;
+	float:left;
+}
+.active_in{
+	border-bottom:6px solid #E86A54 !important;
+}
+.active_out{
+	border-bottom:6px solid #A1CEA4 !important;
+}
+#out{
+	margin-right:30%;
+	float:right;
+}
+#filters img {
+	border-bottom: 2px solid white;
+	padding-bottom:5px;
+	-webkit-transition : border 100ms ease-out; 
+}
+#drop{
+	width:450px;
+	height:450px;
+	background-color: white;
+	border-radius: 100%;
+	margin:0 auto;
+}
+#del{
+	width:100%;
+	margin-top:60px;
+	display:none;
+}
+#del img{
+	display:block;
+	margin:0 auto;
+}
+.sel-true{
+	text-decoration: underline;
+}
+.helper{
+	color:#777;
+	z-index:10;
+	-webkit-transform: translate3d(0px,0px,0px);
+}
+
+
+@-webkit-keyframes blink {
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0.3;
+    }
+    100% {
+        opacity:1;
+    }
+}
+
+#cross {
+
+    -webkit-animation-direction: normal;
+    -webkit-animation-duration: 0.8s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: blink;
+    -webkit-animation-timing-function: ease-in-out;    
+}
+.filt-both{
+	background: -webkit-linear-gradient(left, #e86a54 1%,#a1cea4 78%);
+}
+.filt-in{
+	background-color:#E86A54;	
+}
+
+.filt-out{
+	background-color:#A1CEA4;	
+}
+
+.filt-none{
+	background-color:transparent;	
+}
+
+.token{
+	width:80px;
+	height:80px;
+	font-size:14px;
+	text-align:center;
+	border-radius:100%;
+	display:-webkit-box;
+	-webkit-box-pack:center;
+	-webkit-box-align:center;
+	text-transform: capitalize;
+	-webkit-transition: background-color 100ms linear;
+	-webkit-transform: translate3d(0px,0px,0px);
+}
+.cont {
+	background: url('cont.png');
+	width:100px !important;
+	height:100px !important;
+	background-position:70% 80%;
+	background-repeat: no-repeat;
+	text-transform: uppercase;
+}
+
+.cont.filt-both {
+	background: url('cont.png'),-webkit-linear-gradient(left, #e86a54 1%,#a1cea4 78%);
+	width:100px !important;
+	height:100px !important;
+	background-position:80% 80%;
+	background-repeat: no-repeat;
+}
+.cont.filt-in {
+	background: url('cont.png'),#e86a54;
+	width:100px !important;
+	height:100px !important;
+	background-position:80% 80%;
+	background-repeat: no-repeat;
+}
+.cont.filt-out {
+	background: url('cont.png'),#a1cea4;
+	width:100px !important;
+	height:100px !important;
+	background-position:80% 80%;
+	background-repeat: no-repeat;
+}
+.cont.filt-none {
+	background: url('cont.png'),transparent;
+	width:100px !important;
+	height:100px !important;
+	background-position:80% 80%;
+	background-repeat: no-repeat;
+}
+#info-pan{
+	margin-left:20px;
+	background-color:#000;
+	position:absolute;
+	left:-460px;
+	width:60%;
+	z-index:2;
+	-webkit-transition : left 100ms ease-out;
+}
+#info-pan p{
+	width:90%;
+}
+.sel {
+	background-color: white !important;
+	border-radius: 100%;
+	color:black !important;
+}
