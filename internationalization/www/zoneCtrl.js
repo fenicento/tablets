@@ -173,15 +173,19 @@ angular.module('inter', [])
 
 			        //check if continent, remove countries
 			        if($(ui.helper).hasClass('continent')) {
+			        	
+						for (e=0; e<ne.scope().zone.countries.length; e++) {
+			        			osc.send('/removeCountry',ne.scope().countries[e].name,ok,ko)
+			        			console.log(ne.scope().zone.countries[e]);
+			        			}
+
 			        	$.each($('.token'),function(c,v){
-			        		console.log(v);
+		
 			        		inds=$(v).attr('indexes').split("-");
 			        		if(inds[1]==ne.scope().$index) {
-			        			
+			        				
 			        			$(v).hide('scale',{done:function(){$(v).remove();}},200);
-			        			for (var e=0; e<ne.scope().countries.length; e++) {
-			        			osc.send('/removeCountry',ne.scope().countries[e].name,ok,ko)
-			        			}
+			        			
 			        		}
 			        	});
 			        }
