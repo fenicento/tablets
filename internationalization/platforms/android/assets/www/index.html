@@ -85,7 +85,21 @@
 		 	<script type="text/javascript" src="cordova.js"></script>
 	        <!--<script type="text/javascript" src="js/index.js"></script>-->
 	        <script type="text/javascript">
-	            app.initialize();
+	            
+	            document.addEventListener("deviceready", onDeviceReady, false);
+
+			    function onDeviceReady() {
+			    	window.osc = new OSCSender('192.168.173.1',12000);
+			    }
+			    
+			    function ok() {
+
+			    }
+			    function ko() {
+			
+			        alert('ko');
+			    }
+	            
 	        </script>
 	</body>
 </html>

@@ -39,6 +39,8 @@ $scope.filt="filt-both";
 $scope.toggleIn=function() {
 	console.log($scope.inc)
 	$scope.inc=!$scope.inc
+	if($scope.inc) osc.send('/filter',["in",1],ok,ko);
+	else osc.send('/filter',["in",0],ok,ko);
 	if(!$scope.inc && !$scope.outc) $scope.filt="filt-none";
 	else if($scope.inc && !$scope.outc) $scope.filt="filt-in";
 	else if(!$scope.inc && $scope.outc) $scope.filt="filt-out";
@@ -51,10 +53,12 @@ $scope.toggleIn=function() {
 $scope.toggleOut=function() {
 	console.log($scope.outc)
 	$scope.outc=!$scope.outc
+	if($scope.outc) osc.send('/filter',["out",1],ok,ko);
+	else osc.send('/filter',["out",0],ok,ko);
 		if(!$scope.inc && !$scope.outc) $scope.filt="filt-none";
 	else if($scope.inc && !$scope.outc) $scope.filt="filt-in";
 	else if(!$scope.inc && $scope.outc) $scope.filt="filt-out";
-	else $scope.filt="filt-both";
+	else $scope.filt="filt-both"
 
 	$scope.safeApply();
 }
@@ -123,8 +127,14 @@ angular.module('inter', [])
 				if(scope.country) {
 				scope.$watch("country",function(newVal) {
 					//console.log(newVal)
-		        	if(!newVal.sel) element.draggable('enable')
-		        	else element.draggable('disable')
+		        	if(!newVal.sel) {
+		        		element.draggable('enable')
+		        		
+		        	}
+		        	else {
+		        		element.draggable('disable')
+		        		osc.send('/addCountry',scope.country.name,ok,ko)
+		        	}
 		        });
 			}
 			else if(scope.zone) {
@@ -132,7 +142,9 @@ angular.module('inter', [])
 				//console.log(newVal)
 		        	
 		        	if(!newVal.sel) element.draggable('enable')
-		        	else element.draggable('disable')
+		        	else {
+		        		element.draggable('disable')
+		        	}
 		        });
 	     }	
 			}
@@ -165,7 +177,11 @@ angular.module('inter', [])
 			        		console.log(v);
 			        		inds=$(v).attr('indexes').split("-");
 			        		if(inds[1]==ne.scope().$index) {
+			        			
 			        			$(v).hide('scale',{done:function(){$(v).remove();}},200);
+			        			for (var e=0; e<ne.scope().countries.length; e++) {
+			        			osc.send('/removeCountry',ne.scope().countries[e].name,ok,ko)
+			        			}
 			        		}
 			        	});
 			        }
@@ -242,9 +258,11 @@ angular.module('inter', [])
 			       s=$(ui.draggable).scope()
 			       $(ui.draggable).hide('scale',{done:function(){$(ui.draggable).remove();}},200)
 			       s.struct.sel=false;
+			       osc.send('/removeCountry',s.struct.name,ok,ko)
 			       if(s.struct.countries) {
 			       	for(c in s.struct.countries) {
 			       		
+			       		osc.send('/removeCountry',s.struct.countries[c].name,ok,ko)
 			       		s.struct.countries[c].sel=false;
 			       	}
 			       }
