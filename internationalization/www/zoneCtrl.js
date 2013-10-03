@@ -179,8 +179,8 @@ angular.module('inter', [])
 			        		if(inds[1]==ne.scope().$index) {
 			        			
 			        			$(v).hide('scale',{done:function(){$(v).remove();}},200);
-			        			for (var e=0; e<ne.scope().countries.length; e++) {
-			        			osc.send('/removeCountry',ne.scope().countries[e].name,ok,ko)
+			        			for (e=0; e<ne.scope().continent.countries.length; e++) {
+			        			osc.send('/removeCountry',ne.scope().continent.countries[e].name,ok,ko)
 			        			}
 			        		}
 			        	});
