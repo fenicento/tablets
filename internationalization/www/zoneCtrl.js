@@ -125,7 +125,7 @@ angular.module('inter', [])
 
 			scope.checkSel=function() {
 				if(scope.country) {
-				scope.$watch("country",function(newVal) {
+				scope.$watch("country",function(newVal,oldVal) {
 					//console.log(newVal)
 		        	if(!newVal.sel) {
 		        		element.draggable('enable')
@@ -133,7 +133,8 @@ angular.module('inter', [])
 		        	}
 		        	else {
 		        		element.draggable('disable')
-		        		osc.send('/addCountry',scope.country.name,ok,ko)
+
+		        		
 		        	}
 		        });
 			}
@@ -175,9 +176,11 @@ angular.module('inter', [])
 			        if($(ui.helper).hasClass('continent')) {
 			        	
 						for (e=0; e<ne.scope().zone.countries.length; e++) {
-			        			osc.send('/removeCountry',ne.scope().countries[e].name,ok,ko)
-			        			console.log(ne.scope().zone.countries[e]);
-			        			}
+			        			if (ne.scope().zone.countries[e].sel) {
+			        			osc.send('/addCountry',ne.scope().zone.countries[e].name,ok,ko)
+			        		}
+			        			//console.log(ne.scope().zone.countries[e]);
+			        	}
 
 			        	$.each($('.token'),function(c,v){
 		
@@ -185,9 +188,18 @@ angular.module('inter', [])
 			        		if(inds[1]==ne.scope().$index) {
 			        				
 			        			$(v).hide('scale',{done:function(){$(v).remove();}},200);
-
+			        			
 			        		}
 			        	});
+			        }
+
+			        else {
+
+			        	if (ne.scope().country.sel) {
+			        			osc.send('/addCountry',ne.scope().country.name,ok,ko)
+			        		}
+
+
 			        }
 
 			        //moprh draggable

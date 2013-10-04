@@ -1,24 +1,112 @@
 <!DOCTYPE html>
-
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <script src="js/jquery-1.9.1.js"></script>
+<html lang="en"  ng-app='inter'>
+	<head>
+		<meta charset=utf-8>
+		<meta name="viewport" content="width=1280">
+		<title>Polimi 150 - internazionalizzazione</title>
+		<link rel="stylesheet" href="internaz.css">
+		<script src="js/jquery-1.10.2.min.js"></script>
 	    <script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+	    <script src="js/d3.v3.min.js"></script>
 	    <script src="jquery.ui.touch-punch.js"></script>
-        <title>Press</title>
-    </head>
-    <body>
-        <div class="app">
-        	
-        </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
-        </script>
-    </body>
+		<script src="angular.min.js"></script>
+		<script src="zoneCtrl.js"></script>
+		<script>
+			ke=["Milano","Eni","Gae Aulenti"]
+		</script>
+
+	</head>
+	<body ng-controller="zoneCtrl">
+		<div id="side">
+			<div id="top-side">
+				<img width="100" src="press.png"/>
+				I MEDIA
+			<input auto-complete ui-items="keys" ng-model="selected">
+			<div class="clear"></div>
+			<div  ng-bind="key" id="term">{{key}}</div><div  ng-click="resetKey()" ng-hide="key ==''" id="delterm">X</div>
+			</div>
+			
+			<div class="clear"></div>
+			
+			<div id="list">
+			  <ul class="continents">
+		        <li ng-repeat="entity in zones">
+		          <span draggable class="entity sel-{{entity.sel}}">{{entity.label.toLowerCase()}}</span><div class="circ {{entity.name}}"></div>
+		          <!--ng-mousedown="addContinent(zone)"-->
+		          	<ul class="countries">
+		        		<li ng-repeat="school in entity.schools">
+		        			<div draggable class="school sel-{{school.sel}}">{{school.label}}</div><div class="sm-circ"></div>
+		        			<!--ng-mousedown="addCountry(country)"-->
+		        		</li>
+		        	</ul>
+		        </li>
+		      </ul>
+			</div>
+		</div>
+		<div id="main" bin>
+			<div id="info-pan">
+			<div id="info" onclick="infoSlide()">
+				i
+				</div>
+				<h4>lorem ipsum</h4>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eu nunc molestie, mattis nibh ut, rhoncus nibh. Nullam luctus risus eget enim tristique, et mollis quam faucibus. Quisque magna eros, ultrices ac dignissim facilisis, interdum et nibh. Quisque risus nisi, imperdiet sit amet sodales sed, volutpat sed lacus. Vestibulum a est tellus.</p>
+<h4>lorem ipsum</h4>
+<p>Aliquam non varius enim. Vivamus rhoncus, turpis eu scelerisque pharetra, enim ligula vulputate neque, nec elementum mi urna sit amet elit. Mauris mattis consectetur porta. Duis vel tellus sit amet ipsum pulvinar euismod. Sed lacus ante, accumsan non rhoncus sed, mollis ultricies felis.</p>
+<h4>lorem ipsum</h4>
+<p>Nullam sollicitudin gravida dolor. Curabitur mollis cursus nulla feugiat porta. Sed ac tortor vitae nibh iaculis luctus sit amet a purus. In hac habitasse platea dictumst. Cras tincidunt tristique ante a placerat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas a luctus enim, sit amet commodo mi. Maecenas turpis turpis, auctor a tortor et, consequat suscipit est. </p>
+			</div>
+			<div id="top">
+				
+				<div id="lang">
+					<em>it</em>
+					<em class="sel">en</em>
+				</div>
+			</div>
+			
+			<div id="drop" droppable>
+			</div>
+			<div id="del" >
+				<img id="cross" src="cross.png"/>
+			</div>		
+			</div>
+		<script>
+
+		$('#main').droppable(
+		{
+		   accept:'.token'
+		});
+
+		var infoSlide=function() {
+			console.log($("#info-pan").css("left"))
+			if($("#info-pan").css("left")=="-460px"){
+			$("#info-pan").css("left","300px");
+			$("#info").addClass("sel");
+		}
+			else if($("#info-pan").css("left")=="300px") {
+				$("#info-pan").css("left","-460px");
+				$("#info").removeClass("sel");
+			}
+		}
+		</script>
+		 	<script type="text/javascript" src="cordova.js"></script>
+	        <script type="text/javascript" src="js/index.js"></script>
+	        <script type="text/javascript">
+	            
+	            document.addEventListener("deviceready", onDeviceReady, false);
+
+			    function onDeviceReady() {
+			    	window.osc = new OSCSender('192.168.173.1',12000);
+			    }
+			    
+			    function ok() {
+			    	//alert("sent")
+
+			    }
+			    function ko() {
+			
+			        alert('ko');
+			    }
+	            
+	        </script>
+	</body>
 </html>

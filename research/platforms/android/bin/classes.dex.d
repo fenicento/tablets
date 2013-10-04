@@ -1,0 +1,20 @@
+/Users/davide/Documents/Tablets/research/platforms/android/bin/classes.dex : \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/classes/nl/sylvain/cordova/osc/OSCCallbackListener.class \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/classes/nl/sylvain/cordova/osc/OSCUtils$1.class \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/classes/nl/sylvain/cordova/osc/OSCUtils$2.class \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/classes/nl/sylvain/cordova/osc/OSCUtils$3.class \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/classes/nl/sylvain/cordova/osc/OSCUtils$4.class \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/classes/nl/sylvain/cordova/osc/OSCUtils$5.class \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/classes/nl/sylvain/cordova/osc/OSCUtils$6.class \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/classes/nl/sylvain/cordova/osc/OSCUtils$7.class \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/classes/nl/sylvain/cordova/osc/OSCUtils.class \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/classes/org/density/tablet/research/BuildConfig.class \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/classes/org/density/tablet/research/R$attr.class \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/classes/org/density/tablet/research/R$drawable.class \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/classes/org/density/tablet/research/R$layout.class \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/classes/org/density/tablet/research/R$string.class \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/classes/org/density/tablet/research/R$xml.class \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/classes/org/density/tablet/research/R.class \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/classes/org/density/tablet/research/Research.class \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/dexedLibs/cordova-3.0.0-0bdb64275ebb9853dc20725b2fe25b80.jar \
+/Users/davide/Documents/Tablets/research/platforms/android/bin/dexedLibs/JavaOsc-a610f0610678a8958c9dc810b4c8f7c8.jar \

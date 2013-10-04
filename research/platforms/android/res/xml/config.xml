@@ -11,12 +11,12 @@
     <feature name="App">
         <param name="android-package" value="org.apache.cordova.App" />
     </feature>
+    <feature name="OSC">
+        <param name="android-package" value="nl.sylvain.cordova.osc.OSCUtils" />
+    </feature>
     <access origin="*" />
     <preference name="useBrowserHistory" value="true" />
     <preference name="exit-on-suspend" value="false" />
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />
-    <feature name="OSC">
-        <param name="android-package" value="nl.sylvain.cordova.osc.OSCUtils" />
-    </feature>
 </widget>

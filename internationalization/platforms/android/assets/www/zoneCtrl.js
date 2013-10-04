@@ -90,7 +90,7 @@ angular.module('inter', [])
                 	ui.helper.data('dropped', false);
                 	if(scope.country) {
                 		scope.country.sel=true
-                		console.log()
+                		console.log(ui)
                 		//$(ui.helper).attr("ng-model","country");
                 		scope.$apply();
                 	}
@@ -173,15 +173,19 @@ angular.module('inter', [])
 
 			        //check if continent, remove countries
 			        if($(ui.helper).hasClass('continent')) {
+			        	
+						for (e=0; e<ne.scope().zone.countries.length; e++) {
+			        			osc.send('/removeCountry',ne.scope().countries[e].name,ok,ko)
+			        			console.log(ne.scope().zone.countries[e]);
+			        			}
+
 			        	$.each($('.token'),function(c,v){
-			        		console.log(v);
+		
 			        		inds=$(v).attr('indexes').split("-");
 			        		if(inds[1]==ne.scope().$index) {
-			        			
+			        				
 			        			$(v).hide('scale',{done:function(){$(v).remove();}},200);
-			        			for (var e=0; e<ne.scope().countries.length; e++) {
-			        			osc.send('/removeCountry',ne.scope().countries[e].name,ok,ko)
-			        			}
+
 			        		}
 			        	});
 			        }
@@ -223,12 +227,17 @@ angular.module('inter', [])
         link: function(scope, element, attrs,ngModel) {
         	indexes=element.attr('indexes')
         	var ind=indexes.split("-")
+        	
                	if(ind[1]=='undefined') {
         		scope.struct=scope.zones[ind[0]]
         		element.addClass('cont')
+        		console.log(scope.struct)
+        		element.addClass(scope.struct.name)
+        		
         	}
         	else {
         		scope.struct=scope.zones[ind[1]].countries[ind[0]]
+        		element.addClass(scope.struct.name)
         		}
 
             element.draggable({
