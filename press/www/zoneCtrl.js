@@ -288,10 +288,34 @@ angular.module('inter', [])
     return {
     template: "<div id='timeline'></div>",
 	restrict:"A", 
+	replace:'true',
     link: function(scope, iElement, iAttrs) {
-	 	
+    	
+    	//Build timeline
+    	var format = d3.time.format("%Y-%m-%d");
+	 	var interval = d3.time.month
+		var intm=interval.range( format.parse("1992-01-01"),format.parse("2013-09-01"));
+		year=0;
+		
+		//cycle months
+		for(n in intm) {
+		console.log();
+		cury=intm[n].getFullYear();
+		curm=intm[n].getMonth();
+		if (cury!=year) {
+			iElement.append("<div year=\""+cury+"\" id=\""+cury+"\" class='year'><div class='year-pad'></div><div class='month-cont'></div></div>")
+			year=cury;
 		}
+		$("#"+year+" .month-cont").append("<div month=\""+curm+"\" class='month'></div>");
 	}
+	$(".year-pad").on('click', function(v) {
+		console.log($(v.target).siblings())
+		$(v.target).siblings()[0].slideToggle();
+		
+	});
+	
+}
+}
 });
 
 
