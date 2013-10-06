@@ -1,4 +1,5 @@
-function zoneCtrl($scope,$http) {
+angular.module('inter', ['ngSanitize'])
+.controller('zoneCtrl', function ($scope, $http, $rootScope) {
 
 $scope.safeApply = function(fn) {
   var phase = this.$root.$$phase;
@@ -36,11 +37,122 @@ $scope.inc=true;
 $scope.outc=true;
 $scope.filt="filt-both";
 
+$scope.language="en";
+
+	$scope.info = {
+		it : "<p>L'applicazione esplora il fenomeno dell'internazionalizzazione che interessa il Politecnico di Milano, attraverso i dati relativi ai programmi scambio internazionale. I dati utilizzati, provenienti dall'International Exchange Office, sono relativi agli ultimi due anni accademici e sono stati suddivisi tra studenti di università straniere in entrata e studenti del Politecnico in uscita verso altre università.</p><p>Nella visualizzazione principale gli studenti sono stati rappresentati attraverso dei prismi collocati su una mappa geografica in corrispondenza delle nazioni interessate. La loro altezza indica il numero totale di studenti coinvolti in uno scambio internazionale e la distribuzione del gradiente mostra la proporzione di studenti in entrata e in uscita.</p><h4>TABLET</h4><p>Attraverso il tablet è possibile interagire con la visualizzazione principale, sia filtrando gli studenti in entrata e in uscita, sia selezionando i paesi o i continenti da visualizzare. Le frecce poste sopra il cerchio centrale permettono di filtrare gli studenti in entrata (a sinistra) e in uscita (a destra). È possibile accendere e spegnere entrambi i pulsanti insieme o alternativamente.</p><p>Dal pannello a sinistra si possono trascinare sia paesi che interi continenti all'interno del cerchio bianco centrale per ottenere un filtraggio sulla visualizzazione principale</p>.Ogni elemento inserito all’interno del cerchio può essere eliminato trascinandolo verso il basso.",
+		en : "<p>The application explores the phenomenon of internationalization within Politecnico di Milano through the data on international exchange programs.</p><p>The data, coming from the International Exchange Office, are referred to the last two academic years and have been split into incoming students, from other universities, and outgoing students from Politecnico di Milano.</p><p>In the main screen the students have been represented through prisms placed on a geographical map corresponding to the countries involved. The prisms height indicates the total number of students involved in an international exchange program and the gradient distribution shows the proportion of incoming and outgoing students.</p><h4>TABLET</h4><p>The tablet allows to interact with the main display, both by filtering incoming and outgoing students and by selecting continents or specific countries to be visualized.</p><p>The arrows placed above the circle at the centre allow to filter incoming (on the right) and outgoing students (on the left). Both buttons can be turned on and off together or alternately. From the left panel you can drag both countries and entire continents into the central white circle in order to get a visual filtering on the main display.</p><p>Each element inserted into the circle can be deleted by dragging it downward.</p>"
+	}
+
+	$scope.translate = {
+
+		it : {
+			titolo : "L'Internazionalizzazione",
+			SPAIN : "Spagna",
+			FRANCE : "Francia",
+			PORTUGAL : "Portogallo",
+			GERMANY : "Germania",
+			SWEDEN : "Svezia",
+			BELGIUM : "Belgio",
+			"UNITED KINGDOM" : "Gran Bretagna",
+			POLAND : "Polonia",
+			NETHERLANDS : "Olanda",
+			FINLAND : "Finlandia",
+			DENMARK : "Danimarca",
+			SWITZERLAND : "Svizzera",
+			AUSTRIA : "Austria",
+			NORWAY : "Norvegia",
+			"CZECH REPUBLIC" : "Repubblica Ceca",
+			GREECE : "Grecia",
+			LATVIA : "Lettonia",
+			MALTA : "Malta",
+			HUNGARY : "Ungheria",
+			IRELAND : "Irlanda",
+			CYPRUS : "Cipro",
+			ESTONIA : "Estonia",
+			LITHUANIA : "Lituania",
+			SLOVENIA : "Slovenia",
+			BRAZIL : "Brasile",
+			"UNITED STATES" : "Stati Uniti",
+			COLOMBIA : "Colombia",
+			MEXICO : "Messico",
+			CHILE : "Cile",
+			CANADA : "Canada",
+			ARGENTINA : "Argentina",
+			ECUADOR : "Ecuador",
+			NICARAGUA : "Nicaragua",
+			CHINA : "Cina",
+			TURKEY : "Turchia",
+			JAPAN : "Giappone",
+			RUSSIA : "Russia",
+			ISRAEL : "Israele",
+			"SOUTH KOREA" : "Sud Corea",
+			INDIA : "India",
+			SINGAPORE : "Singapore",
+			LEBANON : "Libano",
+			AUSTRALIA : "Australia",
+			"SOUTH AFRICA" : "Sudafrica"
+		},
+
+		en : {
+			titolo : "Internationalization",
+			SPAIN : "Spain",
+			FRANCE : "France",
+			PORTUGAL : "Portugal",
+			GERMANY : "Germany",
+			SWEDEN : "Sweden",
+			BELGIUM : "Belgium",
+			"UNITED KINGDOM" : "United Kingdom",
+			POLAND : "Poland",
+			NETHERLANDS : "Netherlands",
+			FINLAND : "Finland",
+			DENMARK : "Denmark",
+			SWITZERLAND : "Switzerland",
+			AUSTRIA : "Austria",
+			NORWAY : "Norway",
+			"CZECH REPUBLIC" : "Czech Republic",
+			GREECE : "Greece",
+			LATVIA : "Latvia",
+			MALTA : "Malta",
+			HUNGARY : "Hungary",
+			IRELAND : "Ireland",
+			CYPRUS : "Cyprus",
+			ESTONIA : "Estonia",
+			LITHUANIA : "Lithuania",
+			SLOVENIA : "Slovenia",
+			BRAZIL : "Brazil",
+			"UNITED STATES" : "United States",
+			COLOMBIA : "Colombia",
+			MEXICO : "Mexico",
+			CHILE : "Chile",
+			CANADA : "Canada",
+			ARGENTINA : "Argentina",
+			ECUADOR : "Ecuador",
+			NICARAGUA : "Nicaragua",
+			CHINA : "China",
+			TURKEY : "Turkey",
+			JAPAN : "Japan",
+			RUSSIA : "Russia",
+			ISRAEL : "Israel",
+			"SOUTH KOREA" : "South Korea",
+			INDIA : "India",
+			SINGAPORE : "Singapore",
+			LEBANON : "Lebanon",
+			AUSTRALIA : "Australia",
+			"SOUTH AFRICA" : "South Africa"
+		}
+	}
+
+// funzione che cambia lingua globalmente
+    $scope.setLanguage = function (language){
+    	$scope.language = language; 
+    }
+
 $scope.toggleIn=function() {
 	console.log($scope.inc)
 	$scope.inc=!$scope.inc
-	if($scope.inc) osc.send('/filter',["in",1],ok,ko);
-	else osc.send('/filter',["in",0],ok,ko);
+	//if($scope.inc) osc.send('/filter',["in",1],ok,ko);
+	//else osc.send('/filter',["in",0],ok,ko);
 	if(!$scope.inc && !$scope.outc) $scope.filt="filt-none";
 	else if($scope.inc && !$scope.outc) $scope.filt="filt-in";
 	else if(!$scope.inc && $scope.outc) $scope.filt="filt-out";
@@ -53,8 +165,8 @@ $scope.toggleIn=function() {
 $scope.toggleOut=function() {
 	console.log($scope.outc)
 	$scope.outc=!$scope.outc
-	if($scope.outc) osc.send('/filter',["out",1],ok,ko);
-	else osc.send('/filter',["out",0],ok,ko);
+	//if($scope.outc) osc.send('/filter',["out",1],ok,ko);
+	//else osc.send('/filter',["out",0],ok,ko);
 		if(!$scope.inc && !$scope.outc) $scope.filt="filt-none";
 	else if($scope.inc && !$scope.outc) $scope.filt="filt-in";
 	else if(!$scope.inc && $scope.outc) $scope.filt="filt-out";
@@ -63,9 +175,8 @@ $scope.toggleOut=function() {
 	$scope.safeApply();
 }
 
-}
+})
 
-angular.module('inter', [])
 .directive('draggable', function($rootScope) {
     return {
         // A = attribute, E = Element, C = Class and M = HTML Comment
@@ -177,7 +288,7 @@ angular.module('inter', [])
 			        	
 						for (e=0; e<ne.scope().zone.countries.length; e++) {
 			        			if (ne.scope().zone.countries[e].sel) {
-			        			osc.send('/addCountry',ne.scope().zone.countries[e].name,ok,ko)
+			        			//osc.send('/addCountry',ne.scope().zone.countries[e].name,ok,ko)
 			        		}
 			        			//console.log(ne.scope().zone.countries[e]);
 			        	}
@@ -196,7 +307,7 @@ angular.module('inter', [])
 			        else {
 
 			        	if (ne.scope().country.sel) {
-			        			osc.send('/addCountry',ne.scope().country.name,ok,ko)
+			        			//osc.send('/addCountry',ne.scope().country.name,ok,ko)
 			        		}
 
 
@@ -274,11 +385,11 @@ angular.module('inter', [])
 			       s=$(ui.draggable).scope()
 			       $(ui.draggable).hide('scale',{done:function(){$(ui.draggable).remove();}},200)
 			       s.struct.sel=false;
-			       osc.send('/removeCountry',s.struct.name,ok,ko)
+			       //osc.send('/removeCountry',s.struct.name,ok,ko)
 			       if(s.struct.countries) {
 			       	for(c in s.struct.countries) {
 			       		
-			       		osc.send('/removeCountry',s.struct.countries[c].name,ok,ko)
+			       		//osc.send('/removeCountry',s.struct.countries[c].name,ok,ko)
 			       		s.struct.countries[c].sel=false;
 			       	}
 			       }

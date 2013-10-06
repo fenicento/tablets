@@ -274,3 +274,7 @@ em{
 	border-radius: 100%;
 	color:black !important;
 }
+
+.upper {
+    text-transform: uppercase;
+}
