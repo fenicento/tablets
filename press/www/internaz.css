@@ -409,3 +409,7 @@ input{
 .on{
 	background-color:white;
 }
+
+.upper {
+    text-transform: uppercase;
+}

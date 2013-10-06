@@ -10,6 +10,7 @@
 	    <script src="js/d3.v3.min.js"></script>
 	    <script src="jquery.ui.touch-punch.js"></script>
 		<script src="angular.min.js"></script>
+		<script src="angular-sanitize.min.js"></script>
 		<script src="zoneCtrl.js"></script>
 
 	</head>
@@ -17,7 +18,7 @@
 		<div id="side">
 			<div id="top-side">
 				<img width="100" src="press.png"/>
-				I MEDIA
+				<span class="upper">{{translate[language].titolo}}</span>
 			<input auto-complete ui-items="keys" ng-model="selected">
 			<div class="clear"></div>
 			<div  ng-bind="key" id="term">{{key}}</div><div  ng-click="resetKey()" ng-hide="key ==''" id="delterm">X</div>
@@ -30,7 +31,7 @@
 			  <ul class="continents">
 		        <li ng-repeat="(ind, entity) in zones">
 
-		          <span draggable class="entity sel-{{entity.sel}}">{{entity.label.toLowerCase()}}</span><div class="circ {{entity.name}}"></div>
+		          <span draggable class="entity sel-{{entity.sel}}">{{translate[language][entity.label].toLowerCase()}}</span><div class="circ {{entity.name}}"></div>
 		          <!--ng-mousedown="addContinent(zone)"-->
 		          	<ul class="countries">
 		        		<li ng-repeat="relevant in rele[ind]">
@@ -44,21 +45,16 @@
 		</div>
 		<div id="main" bin>
 			<div id="info-pan">
-			<div id="info" onclick="infoSlide()">
-				i
+				<div id="info" onclick="infoSlide()">
+					i
 				</div>
-				<h4>lorem ipsum</h4>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eu nunc molestie, mattis nibh ut, rhoncus nibh. Nullam luctus risus eget enim tristique, et mollis quam faucibus. Quisque magna eros, ultrices ac dignissim facilisis, interdum et nibh. Quisque risus nisi, imperdiet sit amet sodales sed, volutpat sed lacus. Vestibulum a est tellus.</p>
-<h4>lorem ipsum</h4>
-<p>Aliquam non varius enim. Vivamus rhoncus, turpis eu scelerisque pharetra, enim ligula vulputate neque, nec elementum mi urna sit amet elit. Mauris mattis consectetur porta. Duis vel tellus sit amet ipsum pulvinar euismod. Sed lacus ante, accumsan non rhoncus sed, mollis ultricies felis.</p>
-<h4>lorem ipsum</h4>
-<p>Nullam sollicitudin gravida dolor. Curabitur mollis cursus nulla feugiat porta. Sed ac tortor vitae nibh iaculis luctus sit amet a purus. In hac habitasse platea dictumst. Cras tincidunt tristique ante a placerat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas a luctus enim, sit amet commodo mi. Maecenas turpis turpis, auctor a tortor et, consequat suscipit est. </p>
+				<div ng-bind-html="info[language]"></div>
 			</div>
 			<div id="top">
 				
 				<div id="lang">
-					<em>it</em>
-					<em class="sel">en</em>
+					<em ng-click="setLanguage('it')" ng-class="{sel:language=='it'}">it</em>
+					<em ng-click="setLanguage('en')" ng-class="{sel:language=='en'}">en</em>
 				</div>
 			</div>
 			<div timeline></div>
@@ -87,7 +83,7 @@
 			}
 		}
 		</script>
-		 	<script type="text/javascript" src="cordova.js"></script>
+		 	<!--<script type="text/javascript" src="cordova.js"></script>-->
 	        <script type="text/javascript" src="js/index.js"></script>
 	        <script type="text/javascript">
 	            
