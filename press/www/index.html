@@ -11,9 +11,6 @@
 	    <script src="jquery.ui.touch-punch.js"></script>
 		<script src="angular.min.js"></script>
 		<script src="zoneCtrl.js"></script>
-		<script>
-			ke=["Milano","Eni","Gae Aulenti"]
-		</script>
 
 	</head>
 	<body ng-controller="zoneCtrl">
@@ -29,13 +26,15 @@
 			<div class="clear"></div>
 			
 			<div id="list">
+			
 			  <ul class="continents">
-		        <li ng-repeat="entity in zones">
+		        <li ng-repeat="(ind, entity) in zones">
+
 		          <span draggable class="entity sel-{{entity.sel}}">{{entity.label.toLowerCase()}}</span><div class="circ {{entity.name}}"></div>
 		          <!--ng-mousedown="addContinent(zone)"-->
 		          	<ul class="countries">
-		        		<li ng-repeat="school in entity.schools">
-		        			<div draggable class="school sel-{{school.sel}}">{{school.label}}</div><div class="sm-circ"></div>
+		        		<li ng-repeat="relevant in rele[ind]">
+		        			<div ng-click="addKey(relevant)" class="school">{{relevant}}</div>
 		        			<!--ng-mousedown="addCountry(country)"-->
 		        		</li>
 		        	</ul>
@@ -106,6 +105,10 @@
 			
 			        alert('ko');
 			    }
+
+			   	function SortByName(a, b){
+				  return ((a < b) ? -1 : ((a> b) ? 1 : 0));
+				}
 	            
 	        </script>
 	</body>

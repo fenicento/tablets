@@ -17,9 +17,22 @@ $http.get('fac-data.json')
 
     });
 
-$scope.keys=ke;
+$http.get('entities.json')
+   .then(function(res){
+      $scope.keys = res.data;    
+
+    });
+
+$scope.rele=[]
+$scope.relorgs=[]
+$scope.relpeople=[]
+$scope.relplaces=[]
 $scope.selected="";
 $scope.key="";
+$scope.y1="";
+$scope.y2="";
+$scope.y="";
+$scope.m="";
 
 $scope.resetKey= function() {
 	$scope.key="";
@@ -27,12 +40,71 @@ $scope.resetKey= function() {
 };
 
 $rootScope.$on('search', function(e,s) {
-
-    $scope.key=s;
-    osc.send('/search',$scope.key,ok,ko)
-    
-
+	$scope.key=s;
+	osc.send('/search',s,ok,ko);
 });
+
+$scope.addKey= function(s) {
+	$scope.key=s;
+	osc.send('/search',s,ok,ko);
+};
+
+
+$scope.findRel = function(s,t) {
+
+	rel=[]
+	for(i in $scope.keys) {
+		if($scope.keys[i].t==t) {
+			if($.inArray(s,$scope.keys[i].p)>=0) {
+				console.log(s,$scope.keys[i].p[$.inArray(s,$scope.keys[i].p)])
+				rel.push($scope.keys[i].n);
+			}
+		}
+		if(rel.length>=5) break;
+	}
+	console.log(rel);
+	return rel;
+};
+$scope.findRelInterval = function(s1,s2,t) {
+
+	rel=[]
+	for(i in $scope.keys) {
+		if($scope.keys[i].t==t) 
+			for(l in $scope.keys[i].p) {
+				if($scope.keys[i].p[l].substr(0,4)>=s1 && $scope.keys[i].p[l].substr(0,4)<=s2) {
+					rel.push($scope.keys[i].n)
+					break;
+				}
+			
+		}
+		if(rel.length>=5) break;
+	}
+	console.log(rel);
+	return rel;
+};
+
+
+$rootScope.$on('interval', function(e,s) {
+	$scope.y1=s[0];
+	$scope.y2=s[1];
+	$scope.relorgs=$scope.findRelInterval($scope.y1,$scope.y2,1)
+	$scope.relpeople=$scope.findRelInterval($scope.y1,$scope.y2,2)
+	$scope.relplaces=$scope.findRelInterval($scope.y1,$scope.y2,3)
+	$scope.rele=[$scope.relorgs,$scope.relpeople,$scope.relplaces]
+	$scope.$apply();
+});
+
+$rootScope.$on('singleDate', function(e,s) {
+	ssplit=s.split("#");
+	$scope.m=ssplit[1];
+	$scope.y=ssplit[0];
+	$scope.relorgs=$scope.findRel(s,1)
+	$scope.relpeople=$scope.findRel(s,2)
+	$scope.relplaces=$scope.findRel(s,3)
+	$scope.rele=[$scope.relorgs,$scope.relpeople,$scope.relplaces]
+	$scope.$apply();
+});
+
 
 }
 
@@ -146,27 +218,7 @@ angular.module('inter', [])
 
 			        var ne = $(ui.draggable);
 
-			        //check if continent, remove countries
-			        if($(ui.helper).hasClass('entity')) {
-			        	
-						for (e=0; e<ne.scope().entity.schools.length; e++) {
-			        			osc.send('/removeToken',ne.scope().entity.schools[e].name,ok,ko)
-			        			console.log(ne.scope().entity.schools[e]);
-			        			}
-			        			//osc.send('/addToken',ne.scope().entity.name,ok,ko)
-
-			        	$.each($('.token'),function(c,v){
-		
-			        		inds=$(v).attr('indexes').split("-");
-			        		if(inds[1]==ne.scope().$index) {
-			        				
-			        			$(v).hide('scale',{done:function(){$(v).remove();}},200);
-
-			        		}
-			        	});
-			        }
-			        //else osc.send('/addToken',ne.scope().school.name,ok,ko)
-
+			    
 			        //moprh draggable
 			        var newDiv = $(ui.helper).clone(true)
 	               .removeClass('ui-draggable-dragging')
@@ -212,10 +264,7 @@ angular.module('inter', [])
         		element.html(scope.struct.label)
         		element.addClass(scope.struct.name)
         	}
-        	else {
-        		scope.struct=scope.zones[ind[1]].schools[ind[0]]
-        		element.addClass(scope.struct.name)
-        		}
+        	
 
             element.draggable({
                 revert:'invalid',
@@ -264,10 +313,21 @@ angular.module('inter', [])
     	console.log(iAttrs)
             iElement.autocomplete({
                 source: function(request, response) {
-        var results = $.ui.autocomplete.filter(scope[iAttrs.uiItems], request.term);
 
+                	arr=$.map(scope[iAttrs.uiItems], function( n, i ) {
+                		return n.n;
+                	});
+        var results = $.ui.autocomplete.filter(arr, request.term);
+        console.log(request,response)
+        //console.log(scope)
+        //console.log(iAttrs.uiItems)
         response(results.slice(0, 2));
     },
+    			focus: function( event, ui ) {
+    				console.log("here")
+			        console.log(ui)
+			        return false;
+			      },
     			position:{ of:"input"},
                 appendTo: "#top-side",
                 select: function() {
@@ -282,7 +342,7 @@ angular.module('inter', [])
             });
     };
 })
-.directive('timeline', function($timeout) {
+.directive('timeline', function($rootScope) {
 	
 	
     return {
@@ -302,19 +362,70 @@ angular.module('inter', [])
 		console.log();
 		cury=intm[n].getFullYear();
 		curm=intm[n].getMonth();
+		
+		//new year
 		if (cury!=year) {
 			iElement.append("<div year=\""+cury+"\" id=\""+cury+"\" class='year'><div class='year-pad'></div><div class='month-cont'></div></div>")
 			year=cury;
+			if(cury % 5==0) $("#"+year).prepend("<div class='y-label'> "+year+"</div>")
 		}
-		$("#"+year+" .month-cont").append("<div month=\""+curm+"\" class='month'></div>");
+	//add months
+		$("#"+year+" .month-cont").append("<div month=\""+curm+"\" class='month "+(curm+1)+"'></div>");
 	}
+	//slide toggle
 	$(".year-pad").on('click', function(v) {
-		console.log($(v.target).siblings())
-		$(v.target).siblings()[0].slideToggle();
-		
+		v.preventDefault();
+		$(v.target).siblings().toggle();
 	});
-	
+
+	//bind touchmove
+	var yearArr=[];
+
+	function highlightHoveredObject(x, y) {
+    $('.year-pad').each(function() {
+      // check if is inside boundaries
+      if (!(
+          x <= $(this).offset().left || x >= $(this).offset().left + $(this).outerWidth() ||
+          y <= $(this).offset().top-300  || y >= $(this).offset().top + $(this).outerHeight()+300
+      )) {
+        var par=$(this).parent();
+        if($.inArray(yearArr,par.attr("id"))<0) yearArr.push(par.attr('id'));
+        $(this).addClass('on');
+      }
+    });
 }
+$("#main").bind("touchstart", function(evt){
+	$('.year-pad').removeClass("on")
+	yearArr=[]
+});
+
+$("#timeline").bind("touchmove", function(evt){
+  var touch = evt.originalEvent.touches[0]
+  highlightHoveredObject(touch.clientX, touch.clientY);
+});
+
+$("#timeline").bind("touchend", function(evt){
+		yearArr.sort(SortByName);
+		console.log([yearArr[0],yearArr[yearArr.length-1]]);
+		if(yearArr[0]!=0 && yearArr[0]!="0" && yearArr[yearArr.length-1] != 0 && yearArr[yearArr.length-1]!="0") {
+		scope.$emit('interval',[yearArr[0],yearArr[yearArr.length-1]]);
+		osc.send('/interval',[yearArr[0]+"",yearArr[yearArr.length-1]+""],ok,ko)
+	}
+	});
+
+$(".month").on("click",function(evt) {
+	$(this).addClass("on");
+	$(this).parent().hide();
+	m=$(this).attr('month')
+	y=$(this).parent().parent().attr('year');
+	if(m!=0 && m!="0" && m!==undefined && y!=0 && y!="0") {
+	osc.send('/querydb',[m+"",y+""],ok,ko)
+	scope.$emit('singleDate',y+"#"+m);
+}
+
+}); 
+
+} // end link function
 }
 });
 
