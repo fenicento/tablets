@@ -377,3 +377,7 @@ input{
 	
 	margin-right:30px;
 }
+
+.upper {
+    text-transform: uppercase;
+}
